@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Wizard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .wizard-section {
+      margin-top: 30px;
+    }
+    .wizard-step {
+      display: none;
+    }
+    .wizard-step.active {
+      display: block;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to the Wizard</h1>
+
+  <div class="wizard-section">
+    <div id="step1" class="wizard-step active">
+      <h2>Do you want to continue?</h2>
+      <button onclick="goToNextStep()">Yes</button>
+      <button onclick="window.open('https://example.com', '_blank')">No</button>
+    </div>
+
+    <div id="step2" class="wizard-step">
+      <h2>This is the next step of the wizard.</h2>
+      <p>You're now on step 2.</p>
+    </div>
+  </div>
+
+  <script>
+    function goToNextStep() {
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
