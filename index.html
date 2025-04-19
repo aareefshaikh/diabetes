@@ -1,78 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Informative Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f0f0f0;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .section {
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 20px 0;
-      background-color: #fff;
-    }
-    h2 {
-      margin-top: 0;
-      color: #555;
-    }
-    p {
-      color: #666;
-      line-height: 1.6;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informative Page</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .section-card {
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+
+        .btn-large {
+            margin: 10px 10px 0 0;
+        }
+
+        .margin-top {
+            margin-top: 15px;
+        }
+    </style>
 </head>
-<body>
-  <h1>Nierenschutz-beginnt hier</h1>
-  <h3>Wir begleiten sie von infos zu behandlung Albumin</h3>
 
-  <div class="section">
-    <h2>Wissen Sie, was Albuminurie ist?</h2>
-    <p>Klicken Sie <a href="https://example.com" target="_blank">hier</a>, um mehr darüber zu erfahren.</p>
-  </div>
+<body class="grey lighten-4">
+    <div class="container" x-data="{ 
+        showWissen: false, 
+        showWissenNo: false,
+        showUrineTest: false, 
+        showUrineTestNo: false, 
+        showKennen: false, 
+        showKennenNo: false,
+        showNephroList: false,
+    }">
 
-  <div class="section">
-    <h2>Haben Sie dieses Jahr einen Urintest gemacht?</h2>
-    <p>Bitte vereinbaren Sie einen Termin bei Ihrer:</p>
-    <ul>
-      <li>Hausärztin</li>
-      <li>Diabetologin</li>
-    </ul>
-  </div>
+        <h3>Nierenschutz-beginnt hier</h3>
+        <p>Wir begleiten sie von infos zu behandlung Albumin</p>
 
-  <div class="section">
-    <h2>Kennen Sie Ihren Albumin-Wert?</h2>
-    <ul>
-      <li>
-        Unter 30 mg/dl – <strong>Alles in Ordnung</strong>
-      </li>
-      <li>
-        30–300 mg/dl (Mikroalbuminurie)
-        <ul>
-          <li>Medikamentendosis anpassen</li>
-          <li>2× pro Jahr Urin testen</li>
-          <li>Bei eGFR &lt; 60 und Albuminurie:
-            <ul>
-              <li>Überweisung zur Nephrologie</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        Über 300 mg/dl (Makroalbuminurie)
-        <ul>
-          <li>Überweisung zur Nephrologie</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+        <div class="card white section-card z-depth-1">
+            <h5 class="text-darken-2">Wissen Sie, was Albuminurie ist?</h5>
+
+            <div class="margin-top">
+                <a class="btn-small green lighten-1 waves-effect waves-light" @click="showUrineTest=true">Ja,
+                    bereits</a>
+                <a class="btn-small red lighten-1 waves-effect waves-light" @click="showWissenNo=true">Nein</a>
+            </div>
+
+            <div x-show="showWissenNo" class="yellow lighten-4 card-panel z-depth-0 margin-top">
+                Klicken Sie <a href="https://example.com" target="_blank">hier</a>, um mehr darüber zu erfahren.
+            </div>
+        </div>
+
+        <div class="card white section-card z-depth-1" x-show="showUrineTest">
+            <h5 class="text-darken-2">Haben Sie dieses Jahr einen Urintest gemacht?</h5>
+
+            <div class="margin-top">
+                <a class="btn-small green lighten-1 waves-effect waves-light" @click="showKennen=true">Ja, bereits</a>
+                <a class="btn-small red lighten-1 waves-effect waves-light" @click="showUrineTestNo=true">Nein</a>
+            </div>
+
+            <div x-show="showUrineTestNo" class="yellow lighten-4 card-panel z-depth-0 margin-top">
+                Bitte vereinbaren Sie einen Termin – <strong>entweder</strong> bei Ihrer:
+                <ul class="browser-default">
+                    <li>Hausärztin</li>
+                    <li>Diabetologin</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card white section-card z-depth-1" x-show="showKennen" x-init="
+        $watch('showNephroList', value => {
+            if (value) {
+                $nextTick(() => {
+                    $refs.nephroSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        })
+        ">
+            <h5 class="text-darken-2">Je nach Albumin-Wert: Das kann zu tun sein</h5>
+            <table class="highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Albumin-Wert</th>
+                        <th>Empfohlene Maßnahmen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unter 30 mg/dl</td>
+                        <td>
+                            <i class="material-icons left green-text" style="vertical-align: middle;">mood</i>
+                            <strong>Super – Ihre Nierenwerte sind in Ordnung!</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>30–300 mg/dl<br><small>(Mikroalbuminurie)</small></td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 1rem; list-style-type: disc;" class="browser-default">
+                                <li>Medikamentendosis anpassen</li>
+                                <li>2× pro Jahr Urin testen</li>
+                                <li>
+                                    <span class="amber lighten-4 black-text"
+                                        style="padding: 4px 8px; border-radius: 4px; display: inline-block;">
+                                        <strong>Bei eGFR &lt; 60 und Albuminurie:</strong>
+                                        Eine Überweisung zur Nephrologie ist empfohlen.
+                                        Klicken Sie <a href="#" @click.prevent="showNephroList = true">hier</a>, um
+                                        Ärzt*innen in Ihrer Umgebung zu finden.
+                                    </span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Über 300 mg/dl<br><small>(Makroalbuminurie)</small></td>
+                        <td>
+                            <span class="amber lighten-4 black-text"
+                                style="padding: 4px 8px; border-radius: 4px; display: inline-block;">
+                                Eine Überweisung zur Nephrologie ist empfohlen.
+                                Klicken Sie <a href="#" @click.prevent="showNephroList = true">hier</a>, um Ärzt*innen
+                                in Ihrer Umgebung zu finden.
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card white section-card z-depth-1" x-show="showNephroList" x-ref="nephroSection">
+            <h5 class="text-darken-2">Nephrolog:innen in Ihrer Nähe</h5>
+            <div class="row">
+                <!-- Dr. med. Jörg Woeste -->
+                <div class="col s12 m6 l4">
+                    <div class="card blue-grey lighten-5">
+                        <div class="card-content">
+                            <span class="card-title">Dr. med. Jörg Woeste</span>
+                            <p>Kaiserstraße 199<br>58300 Wetter (Ruhr)</p>
+                            <p>Tel: 02335 2122</p>
+                            <p><a href="https://www.praxis-vowo.de/" target="_blank">Website</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alexander Weinreis -->
+                <div class="col s12 m6 l4">
+                    <div class="card blue-grey lighten-5">
+                        <div class="card-content">
+                            <span class="card-title">Alexander Weinreis</span>
+                            <p>Grünstraße 35a<br>58095 Hagen</p>
+                            <p>Tel: 02331 97106-0</p>
+                            <p><a href="https://www.kfh.de/nierenzentrum/hagen/" target="_blank">Website</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nephrocare Hagen GmbH -->
+                <div class="col s12 m6 l4">
+                    <div class="card blue-grey lighten-5">
+                        <div class="card-content">
+                            <span class="card-title">Nephrocare Hagen GmbH</span>
+                            <p>Mittelstraße 22<br>58095 Hagen</p>
+                            <p>Tel: 02331 3675-0</p>
+                            <p><a href="https://www.nephrocare-hagen.de/" target="_blank">Website</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
