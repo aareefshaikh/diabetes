@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informative Page</title>
+    <title>Nierenschutz-beginnt hier</title>
     <!-- Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -37,6 +37,54 @@
         showKennen: false, 
         showKennenNo: false,
         showNephroList: false,
+        wissenNo() {
+            this.showWissenNo = true;
+            this.showUrineTest = false;
+            this.showUrineTestNo = false; 
+            this.showKennen = false; 
+            this.showKennenNo = false;
+            this.showNephroList = false;
+        },
+        wissenYes() {
+            this.showUrineTest = true;
+            this.showWissenNo = false;
+            this.showUrineTestNo = false; 
+            this.showKennen = false; 
+            this.showKennenNo = false;
+            this.showNephroList = false;
+        },
+        urineTestYes() {
+            this.showKennen = true; 
+            this.showUrineTest = true;
+            this.showWissenNo = false;
+            this.showUrineTestNo = false; 
+            this.showKennenNo = false;
+            this.showNephroList = false;
+        },
+        urineTestNo() {
+            this.showUrineTestNo = true; 
+            this.showUrineTest = true;
+            this.showWissenNo = false;
+            this.showKennen = false; 
+            this.showKennenNo = false;
+            this.showNephroList = false;
+        },
+        kennenYes() {
+            this.showKennen = true; 
+            this.showUrineTest = true;
+            this.showWissenNo = false;
+            this.showUrineTestNo = false; 
+            this.showKennenNo = false;
+            this.showNephroList = false;
+        },
+        kennenNo() {
+            this.showUrineTestNo = false; 
+            this.showUrineTest = true;
+            this.showWissenNo = false;
+            this.showKennenNo = true;
+            this.showKennen = true; 
+            this.showNephroList = false;
+        },
     }">
 
         <h3>Nierenschutz-beginnt hier</h3>
@@ -46,13 +94,13 @@
             <h5 class="text-darken-2">Wissen Sie, was Albuminurie ist?</h5>
 
             <div class="margin-top">
-                <a class="btn-small green lighten-1 waves-effect waves-light" @click="showUrineTest=true">Ja,
+                <a class="btn-small green lighten-1 waves-effect waves-light" @click="wissenYes">Ja,
                     bereits</a>
-                <a class="btn-small red lighten-1 waves-effect waves-light" @click="showWissenNo=true">Nein</a>
+                <a class="btn-small red lighten-1 waves-effect waves-light" @click="wissenNo">Nein</a>
             </div>
 
             <div x-show="showWissenNo" class="yellow lighten-4 card-panel z-depth-0 margin-top">
-                Klicken Sie <a href="https://example.com" target="_blank">hier</a>, um mehr darüber zu erfahren.
+                Klicken Sie <a href="https://www.youtube.com/watch?v=OAJ11G-4pfM" target="_blank">hier</a>, um mehr darüber zu erfahren.
             </div>
         </div>
 
@@ -60,8 +108,8 @@
             <h5 class="text-darken-2">Haben Sie dieses Jahr einen Urintest gemacht?</h5>
 
             <div class="margin-top">
-                <a class="btn-small green lighten-1 waves-effect waves-light" @click="showKennen=true">Ja, bereits</a>
-                <a class="btn-small red lighten-1 waves-effect waves-light" @click="showUrineTestNo=true">Nein</a>
+                <a class="btn-small green lighten-1 waves-effect waves-light" @click="urineTestYes">Ja, bereits</a>
+                <a class="btn-small red lighten-1 waves-effect waves-light" @click="urineTestNo">Nein</a>
             </div>
 
             <div x-show="showUrineTestNo" class="yellow lighten-4 card-panel z-depth-0 margin-top">
